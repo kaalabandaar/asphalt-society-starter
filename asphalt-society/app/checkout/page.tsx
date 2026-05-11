@@ -1,0 +1,1 @@
+import { Nav } from '@/components/Nav';export default function Checkout(){return <main><Nav/><section className="px-6 pt-32 md:px-16"><h1 className="font-display text-8xl">CHECKOUT.</h1><p className="text-asphalt-smoke">Stripe Checkout route included at /api/checkout.</p></section></main>}

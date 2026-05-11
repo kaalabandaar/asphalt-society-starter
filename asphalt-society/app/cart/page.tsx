@@ -1,0 +1,1 @@
+import { Nav } from '@/components/Nav';export default function Cart(){return <main><Nav/><section className="px-6 pt-32 md:px-16"><h1 className="font-display text-8xl">CART.</h1><div className="glass mt-8 rounded-3xl p-8">Cart state is ready for Zustand/DB-backed implementation. Connect items to /api/checkout.</div></section></main>}

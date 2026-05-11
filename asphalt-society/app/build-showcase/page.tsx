@@ -1,0 +1,1 @@
+import { Nav } from '@/components/Nav';import { FeaturedBuilds } from '@/components/FeaturedBuilds';export default function Builds(){return <main><Nav/><div className="pt-20"><FeaturedBuilds/></div></main>}

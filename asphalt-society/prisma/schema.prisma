@@ -1,0 +1,13 @@
+generator client { provider = "prisma-client-js" }
+datasource db { provider = "postgresql" url = env("DATABASE_URL") }
+enum Role { USER ADMIN }
+enum OrderStatus { PENDING PAID FULFILLED CANCELLED REFUNDED }
+model User { id String @id @default(cuid()) email String @unique name String? passwordHash String? role Role @default(USER) createdAt DateTime @default(now()) builds Build[] orders Order[] reviews Review[] likes Like[] comments Comment[] }
+model Product { id String @id @default(cuid()) name String slug String @unique description String price Int category String inventory Int @default(0) images String[] specs Json? createdAt DateTime @default(now()) reviews Review[] orderItems OrderItem[] }
+model Build { id String @id @default(cuid()) name String vehicle String config Json imageUrl String? isFeatured Boolean @default(false) createdAt DateTime @default(now()) userId String? user User? @relation(fields:[userId], references:[id]) likes Like[] comments Comment[] }
+model Like { id String @id @default(cuid()) userId String buildId String user User @relation(fields:[userId],references:[id]) build Build @relation(fields:[buildId],references:[id]) @@unique([userId,buildId]) }
+model Comment { id String @id @default(cuid()) body String createdAt DateTime @default(now()) userId String buildId String user User @relation(fields:[userId],references:[id]) build Build @relation(fields:[buildId],references:[id]) }
+model Review { id String @id @default(cuid()) rating Int body String? userId String productId String user User @relation(fields:[userId],references:[id]) product Product @relation(fields:[productId],references:[id]) }
+model Order { id String @id @default(cuid()) userId String? email String total Int status OrderStatus @default(PENDING) stripeSessionId String? createdAt DateTime @default(now()) user User? @relation(fields:[userId],references:[id]) items OrderItem[] }
+model OrderItem { id String @id @default(cuid()) orderId String productId String quantity Int price Int order Order @relation(fields:[orderId],references:[id]) product Product @relation(fields:[productId],references:[id]) }
+model HomepageBlock { id String @id @default(cuid()) key String @unique content Json updatedAt DateTime @updatedAt }

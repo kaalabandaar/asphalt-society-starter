@@ -1,0 +1,2 @@
+import { NextResponse } from 'next/server';import { stripe } from '@/lib/stripe';
+export async function POST(req:Request){const {items}=await req.json(); const session=await stripe.checkout.sessions.create({mode:'payment',line_items:(items||[]).map((i:any)=>({price_data:{currency:'cad',product_data:{name:i.name},unit_amount:Math.round(i.price*100)},quantity:i.quantity||1})),success_url:`${process.env.NEXT_PUBLIC_SITE_URL}/checkout/success`,cancel_url:`${process.env.NEXT_PUBLIC_SITE_URL}/cart`});return NextResponse.json({url:session.url});}
